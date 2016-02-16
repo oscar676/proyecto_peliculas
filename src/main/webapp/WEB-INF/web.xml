@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>OscarFontiobaPaleo</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description>Controlador para gestionar las operaciones sobre peliculas</description>
+    <display-name>PeliculaServlet</display-name>
+    <servlet-name>PeliculaServlet</servlet-name>
+    <servlet-class>com.ipartek.formacion.oscarfonticoba.controladores.PeliculaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PeliculaServlet</servlet-name>
+    <url-pattern>/back/peliculas</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/pages/error/error-404.jsp</location>
+  </error-page>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/pages/errores/error.jsp</location>
+  </error-page>
+  <servlet>
+    <description>Servlet Maestro para que hereden los demas servlets</description>
+    <display-name>MasterServlet</display-name>
+    <servlet-name>MasterServlet</servlet-name>
+    <servlet-class>com.ipartek.formacion.oscarfonticoba.controladores.MasterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MasterServlet</servlet-name>
+    <url-pattern>/master</url-pattern>
+  </servlet-mapping>
+</web-app>
