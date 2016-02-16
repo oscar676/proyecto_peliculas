@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 /**
  * Clase que permite conectar con la base de datos
- * 
+ *
  * @author chenao
  *
  */
@@ -16,6 +18,8 @@ public class DbConnection {
 	static String login = "root";
 	static String password = "";
 	static String url = "jdbc:mysql://localhost/" + bd;
+
+	private final static Logger log = Logger.getLogger(DbConnection.class);
 
 	Connection connection = null;
 
@@ -31,11 +35,14 @@ public class DbConnection {
 				System.out.println("Conexión a base de datos " + bd + " OK\n");
 			}
 		} catch (SQLException e) {
-			System.out.println(e);
+			log.error("Excepcion SQL al conectarse a base de datos "
+					+ e.getMessage());
 		} catch (ClassNotFoundException e) {
-			System.out.println(e);
+			log.error("Excepcion ClassNotFoundException al conectarse a base de datos "
+					+ e.getMessage());
 		} catch (Exception e) {
-			System.out.println(e);
+			log.error("Excepcion al conectarse a base de datos "
+					+ e.getMessage());
 		}
 	}
 

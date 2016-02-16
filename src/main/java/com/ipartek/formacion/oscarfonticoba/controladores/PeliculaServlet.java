@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.ipartek.formacion.oscarfonticoba.Constantes;
 import com.ipartek.formacion.oscarfonticoba.pojo.Pelicula;
 
@@ -20,6 +22,7 @@ import com.ipartek.formacion.oscarfonticoba.pojo.Pelicula;
 public class PeliculaServlet extends MasterServlet {
 
 	private static final long serialVersionUID = 1L;
+	private final static Logger log = Logger.getLogger(PeliculaServlet.class);
 
 	private static int operacion;
 	private static String pId; // Parámetro identificador del usuario, aunque
@@ -79,8 +82,7 @@ public class PeliculaServlet extends MasterServlet {
 			 */
 			dispatch.forward(request, response);
 		} catch (Exception e) {
-			// TODO mejor en un LOG
-			e.printStackTrace();
+			log.error("Excepcion al recibir el GET " + e.getMessage());
 
 			// TODO ir a página error 404.jsp o 500.jsp
 		}
@@ -142,6 +144,7 @@ public class PeliculaServlet extends MasterServlet {
 		} catch (Exception e) {
 			msj = new Mensaje("No se ha eliminado el registro",
 					Mensaje.TIPO_DANGER);
+			log.error("Excepcion al eliminar " + e.getMessage());
 		}
 		listar(request);
 	}

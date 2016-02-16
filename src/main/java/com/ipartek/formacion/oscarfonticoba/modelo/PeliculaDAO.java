@@ -6,9 +6,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.ipartek.formacion.oscarfonticoba.pojo.Pelicula;
 
 public class PeliculaDAO implements Persistable<Pelicula> {
+	private final static Logger log = Logger.getLogger(PeliculaDAO.class);
 
 	@Override
 	public List<Pelicula> getAll() throws SQLException {
@@ -118,6 +121,8 @@ public class PeliculaDAO implements Persistable<Pelicula> {
 			} catch (Exception e) {
 				i = -1;
 				e.printStackTrace();
+				log.error("Excepcion al insertar en la base de datos "
+						+ e.getMessage());
 			}
 			conn.desconectar();
 		}
