@@ -7,7 +7,7 @@ import static org.junit.Assert.fail;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.junit.Ignore;
+import org.junit.Test;
 
 import com.ipartek.formacion.oscarfonticoba.pojo.Pelicula;
 
@@ -17,11 +17,10 @@ public class PeliculaDAOTest {
 	static Connection conn;
 	static PeliculaDAO dao;
 	static Pelicula pMock1, pMock2;
-	static int id1, id2; // identificador de la última operación realizada en el
-							// DAO
+	static int id; // identificador de la última operación realizada en el DAO
 
-	@Ignore
-	public static void setUpBeforeClass() throws Exception {
+	@Test
+	public void setUpBeforeClass() throws Exception {
 
 		db = new DbConnection();
 		conn = db.getConnection();
@@ -29,104 +28,79 @@ public class PeliculaDAOTest {
 		dao = new PeliculaDAO();
 	}
 
-	@Ignore
-	public static void tearDownAfterClass() throws Exception {
+	@Test
+	public void tearDownAfterClass() throws Exception {
 		conn.rollback();
 		db.desconectar();
 		db = null;
 		dao = null;
 	}
 
-	@Ignore
-	public void setUp() throws Exception {
-
-		pMock1 = new Pelicula("Mock", "Accion", 120);
-		pMock2 = new Pelicula("Mock2", "Drama", 140);
-
-		id1 = dao.insert(pMock1);
-		assertTrue("No se ha realizado la inserción", id1 > 0);
-	}
-
-	@Ignore
-	public void tearDown() {
+	@Test
+	public void test() {
 		try {
-			assertTrue("No se pudo eliminar", dao.delete(id1));
-		} catch (SQLException e) {
-			fail("Hay algún problema en el test: " + e.getMessage());
-		}
-	}
 
-	@Ignore
-	public void testGetAll() {
-		try {
+			pMock1 = new Pelicula("Mock1", "Accion", 120);
+			pMock2 = new Pelicula("Mock2", "Drama", 140);
+
+			// Comprobar que el tamaño de la base de datos es mayor de 0
+
 			int peliculasSize = dao.getAll().size();
-			assertTrue("debería al menos recuperar una persona",
+			assertTrue("Debería al menos recuperar una persona",
 					peliculasSize > 0);
-			id2 = dao.insert(pMock2);
-			assertTrue("No se ha realizado la inserción", id2 > 0);
-			// assertTrue("debería al menos recuperar dos peliculas",
-			// (peliculasSize + 1) == dao.getAll().size());//No funciona dado
-			// que getAll recupera solo 500 y hay m�s de 500
-			assertTrue("No se pudo eliminar", dao.delete(id2));
-		} catch (SQLException e) {
-			fail("Hay algún problema en el test: " + e.getMessage());
-		}
-	}
 
-	@Ignore
-	public void testGetById() {
-		Pelicula p1;
-		try {
-			p1 = dao.getById(id1);
-			System.out.println(pMock1 + "\n" + p1);
+			// Comprobar si realiza una inserción
+
+			id = dao.insert(pMock1);
+			assertTrue("No se ha realizado la inserción", id > 0);
+
+			// Comprobar que recupera por id
+
+			Pelicula p1 = new Pelicula();
+
+			p1 = dao.getById(id);
+
 			assertTrue("No tienen los mismos atributos", pMock1.equals(p1));
-		} catch (SQLException e) {
-			fail("Hay algún problema en el test: " + e.getMessage());
-		}
-	}
 
-	// Comprobar caso de id inexistente
-	@Ignore
-	public void testDelete() {
-		try {
+			// Comprobar caso de id inexistente
+
 			assertFalse("No puede eliminar lo que no existe", dao.delete(-1));
-		} catch (SQLException e) {
-			fail("Hay algún problema en el test: " + e.getMessage());
-		}
-	}
 
-	@Ignore
-	public void testUpdate() {
-		try {
-			Pelicula p2 = dao.getById(id1);
+			// Comprobar que actualiza la base de datos
+
+			Pelicula p2 = dao.getById(id);
 			p2.setTitulo("Batman");
 			p2.setGenero("Policial");
 			p2.setDuracion(240);
+
 			assertTrue(dao.update(p2));
 			assertTrue("No tienen los mismos atributos",
-					p2.equals(dao.getById(id1)));
+					p2.equals(dao.getById(id)));
 
-			// Test null
+			// Comprobar que no actualiza si le pasamos un null
+
 			assertFalse(
 					"no se puede modifica la base una peliculas que no existe",
 					dao.update(null));
 
-			// Test persona vac�a
+			// Comprobar que no actualiza una película que no existe
+
 			Pelicula p3 = new Pelicula();
 			assertFalse(
 					"no se puede modifica la base una persona que no existe",
 					dao.update(p3));
 
+			// Comprobar que no inserta una pelicula null
+
+			assertTrue("No ha dado error al insertar una pelicula null",
+					dao.insert(null) == -1);
+
+			// Comprobar que realiza la eliminación
+
+			assertTrue("No se pudo eliminar", dao.delete(id));
+
 		} catch (SQLException e) {
 			fail("Hay algún problema en el test: " + e.getMessage());
 		}
-
-		// Test persona que no existe
-	}
-
-	@Ignore
-	public void testInsert() {
-		// assertTrue("No ha dado error al insertar una pelicula null",
-		// dao.insert(null) == -1);
 	}
 }

@@ -91,34 +91,36 @@ public class PeliculaDAO implements Persistable<Pelicula> {
 
 	@Override
 	public int insert(Pelicula persistable) {
-		int i;
-		// Se abre conexión
-		DbConnection conn = new DbConnection();
-		try {
-			String sql = "INSERT INTO `peliculas` (`titulo`, `genero`, `duracion`) VALUES (?,?,?);";
-			PreparedStatement pst = conn.getConnection().prepareStatement(sql,
-					PreparedStatement.RETURN_GENERATED_KEYS);
+		int i = -1;
+		if (persistable != null) {
+			// Se abre conexión
+			DbConnection conn = new DbConnection();
+			try {
+				String sql = "INSERT INTO `peliculas` (`titulo`, `genero`, `duracion`) VALUES (?,?,?);";
+				PreparedStatement pst = conn.getConnection().prepareStatement(
+						sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-			pst.setString(1, persistable.getTitulo());
-			pst.setString(2, persistable.getGenero());
-			pst.setInt(3, persistable.getDuracion());
-			// ejecutar la consulta. Si no afecta a una línea, lanzamos la
-			// excepción
-			if (pst.executeUpdate() != 1) {
-				throw new SQLException("No se ha insertado el dato");
+				pst.setString(1, persistable.getTitulo());
+				pst.setString(2, persistable.getGenero());
+				pst.setInt(3, persistable.getDuracion());
+				// ejecutar la consulta. Si no afecta a una línea, lanzamos la
+				// excepción
+				if (pst.executeUpdate() != 1) {
+					throw new SQLException("No se ha insertado el dato");
+				}
+
+				ResultSet generatedKeys = pst.getGeneratedKeys();
+				generatedKeys.next();
+				i = generatedKeys.getInt(1);
+				persistable.setId(i);
+				pst.close();
+
+			} catch (Exception e) {
+				i = -1;
+				e.printStackTrace();
 			}
-
-			ResultSet generatedKeys = pst.getGeneratedKeys();
-			generatedKeys.next();
-			i = generatedKeys.getInt(1);
-			persistable.setId(i);
-			pst.close();
-
-		} catch (Exception e) {
-			i = -1;
-			e.printStackTrace();
+			conn.desconectar();
 		}
-		conn.desconectar();
 		return i;
 	}
 
