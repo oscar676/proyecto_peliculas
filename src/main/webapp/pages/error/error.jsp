@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.io.StringWriter"%>
 <%@ page isErrorPage="true"%>

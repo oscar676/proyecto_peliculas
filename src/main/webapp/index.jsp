@@ -1,9 +1,10 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%@page import="org.apache.taglibs.standard.tag.common.core.ForEachSupport"%>
 <%@include file="includes/head.jsp"%>
 
-<!-- Este es un comentario para comprobar cómo se unen ramas -->
+<!-- Este es un comentario para comprobar cÃ³mo se unen ramas -->
 
 <div id="page-wrapper">
 	<div class="row">

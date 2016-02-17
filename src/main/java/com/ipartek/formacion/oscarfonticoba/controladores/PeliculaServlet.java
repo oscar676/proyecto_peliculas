@@ -98,10 +98,16 @@ public class PeliculaServlet extends MasterServlet {
 			throws ParseException, SQLException {
 
 		// recoger parámetros formulario
-		int pId = Integer.parseInt(request.getParameter("id")), pDuracion = Integer
-				.parseInt(request.getParameter("duracion"));
+		int pId = Integer.parseInt(request.getParameter("id"));
 		String pTitulo = request.getParameter("titulo"), pGenero = request
 				.getParameter("genero");
+		int pDuracion = 0;
+		if (isNumeric(request.getParameter("duracion"))) {
+			pDuracion = Integer.parseInt(request.getParameter("duracion"));
+
+		} else {
+			pDuracion = 0;
+		}
 
 		// construir pelicula
 		Pelicula peli = new Pelicula();
@@ -132,7 +138,7 @@ public class PeliculaServlet extends MasterServlet {
 
 	/**
 	 * Elimina una pelicula de la base de datos
-	 * 
+	 *
 	 * @param request
 	 * @throws SQLException
 	 */
@@ -169,7 +175,7 @@ public class PeliculaServlet extends MasterServlet {
 
 	/**
 	 * Lista las peliculas de la base de datos
-	 * 
+	 *
 	 * @param request
 	 * @throws SQLException
 	 */
@@ -190,7 +196,7 @@ public class PeliculaServlet extends MasterServlet {
 
 	/**
 	 * Muestra el detalle de una pelicula para modificar sus datos
-	 * 
+	 *
 	 * @param request
 	 * @throws NumberFormatException
 	 * @throws SQLException
@@ -212,6 +218,17 @@ public class PeliculaServlet extends MasterServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+
+	private static boolean isNumeric(String cadena) {
+		boolean resul = false;
+		try {
+			Integer.parseInt(cadena);
+			resul = true;
+		} catch (NumberFormatException nfe) {
+			log.error("Dato introducido incorrecto ");
+		}
+		return resul;
 	}
 
 }

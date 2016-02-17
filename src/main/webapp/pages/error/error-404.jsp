@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@page isErrorPage="true"%>
 
  <button onclick="history.back()">Back to Previous Page</button>
