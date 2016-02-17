@@ -54,6 +54,7 @@ public class DbConnection {
 	 * */
 	public Connection getConnection() {
 		return this.connection;
+
 	}
 
 	/** Desconecta la conexión */

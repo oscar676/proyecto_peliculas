@@ -32,12 +32,14 @@ public class PeliculaServlet extends MasterServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
+		log.trace("Init servlet PeliculaServlet");
 	}
 
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		super.service(request, response);
+		log.trace("service servlet PeliculaServlet");
 	}
 
 	/**
@@ -85,6 +87,7 @@ public class PeliculaServlet extends MasterServlet {
 			log.error("Excepcion al recibir el GET " + e.getMessage());
 
 		}
+		log.trace("DoGet servlet PeliculaServlet");
 	}
 
 	/**
@@ -121,19 +124,24 @@ public class PeliculaServlet extends MasterServlet {
 			if (daoPelicula.insert(peli) != -1) {
 				msj = new Mensaje("Pelicula insertado con éxito",
 						Mensaje.TIPO_SUCCESS);
+				log.info("Pelicula insertada con éxito");
 			} else {
 				msj = new Mensaje("No se ha insertado la pelicula",
 						Mensaje.TIPO_WARNING);
+				log.info("No se ha insertado la pelicula");
 			}
 		} else if (daoPelicula.update(peli)) {
 			msj = new Mensaje("Pelicula modificada con éxito",
 					Mensaje.TIPO_SUCCESS);
+			log.info("Pelicula modificada con éxito");
 		} else {
 			msj = new Mensaje("No se ha modificado el registro",
 					Mensaje.TIPO_WARNING);
+			log.info("No se ha modificado el registro");
 		}
 		// llama al metodo listar pasandole la request
 		listar(request);
+		log.trace("modificarCrear servlet PeliculaServlet");
 	}
 
 	/**
@@ -148,9 +156,11 @@ public class PeliculaServlet extends MasterServlet {
 			if (daoPelicula.delete(pId)) {
 				msj = new Mensaje("Registro eliminado con éxito",
 						Mensaje.TIPO_SUCCESS);
+				log.info("Registro eliminado con éxito");
 			} else {
 				msj = new Mensaje("No se ha eliminado el registro",
 						Mensaje.TIPO_DANGER);
+				log.info("No se ha eliminado el registro");
 			}
 		} catch (Exception e) {
 			msj = new Mensaje("No se ha eliminado el registro",
@@ -158,6 +168,7 @@ public class PeliculaServlet extends MasterServlet {
 			log.error("Excepcion al eliminar " + e.getMessage());
 		}
 		listar(request);
+		log.trace("eliminar Servlet PeliculaServlet");
 	}
 
 	/**
@@ -171,6 +182,7 @@ public class PeliculaServlet extends MasterServlet {
 		request.setAttribute("pelicula", pPeli);
 
 		dispatch = request.getRequestDispatcher(Constantes.VIEW_PELICULA_FORM);
+		log.trace("nuevo servlet PeliculaServlet");
 	}
 
 	/**
@@ -191,7 +203,7 @@ public class PeliculaServlet extends MasterServlet {
 		// Petición interna a la jsp (RequestDistapecher es para decirle a donde
 		// tiene que ir, se carga el dispatcher)
 		dispatch = request.getRequestDispatcher(Constantes.VIEW_PELICULA_LIST);
-
+		log.trace("listar servlet PeliculaServlet");
 	}
 
 	/**
@@ -208,6 +220,7 @@ public class PeliculaServlet extends MasterServlet {
 		request.setAttribute("pelicula", peli);
 
 		dispatch = request.getRequestDispatcher(Constantes.VIEW_PELICULA_FORM);
+		log.trace("detalle servlet PeliculaServlet");
 	}
 
 	/**
@@ -220,6 +233,12 @@ public class PeliculaServlet extends MasterServlet {
 		doGet(request, response);
 	}
 
+	/**
+	 * Comprueba si un String es un número o no
+	 *
+	 * @param cadena
+	 * @return
+	 */
 	private static boolean isNumeric(String cadena) {
 		boolean resul = false;
 		try {
