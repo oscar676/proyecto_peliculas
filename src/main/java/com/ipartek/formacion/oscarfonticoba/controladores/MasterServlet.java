@@ -15,6 +15,8 @@ import com.ipartek.formacion.oscarfonticoba.modelo.PeliculaDAO;
 
 /**
  * Servlet implementation class MasterServlet
+ *
+ * @author oscar
  */
 public class MasterServlet extends HttpServlet {
 
@@ -22,12 +24,21 @@ public class MasterServlet extends HttpServlet {
 	// DAOs
 	protected static PeliculaDAO daoPelicula;
 
-	protected RequestDispatcher dispatch; // El que se encarga de enrutar. Solo
-	// puede ir a un sitio, no se puede
-	// cargar dos veces
+	/**
+	 * Se encarga de enrutar Solo puede ir a un sitio, no se puede cargar dos
+	 * veces
+	 *
+	 */
+	protected RequestDispatcher dispatch;
 
-	protected ResourceBundle messages; // fichero de properties
-	protected static Mensaje msj; // Mensaje a mostrar la usuario
+	/**
+	 * Fichero de properties
+	 */
+	protected ResourceBundle messages;
+	/**
+	 * Mensaje a mostrar la usuario
+	 */
+	protected static Mensaje msj;
 
 	/**
 	 * @see Servlet#init(ServletConfig)
@@ -57,7 +68,7 @@ public class MasterServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		msj = null;
-		messages = null;
+		this.messages = null;
 
 		super.service(request, response);
 	}

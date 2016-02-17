@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 /**
- * Clase que permite conectar con la base de datos
+ * Clase que permite conectar con la base de datos Configuracion de la base de
+ * datos
  *
- * @author chenao
+ * @author oscar
  *
  */
 public class DbConnection {
@@ -29,10 +30,10 @@ public class DbConnection {
 			// obtenemos el driver de para mysql
 			Class.forName("com.mysql.jdbc.Driver");
 			// obtenemos la conexión
-			connection = DriverManager.getConnection(url, login, password);
+			this.connection = DriverManager.getConnection(url, login, password);
 
-			if (connection != null) {
-				System.out.println("Conexión a base de datos " + bd + " OK\n");
+			if (this.connection != null) {
+				log.info("Conexión a base de datos " + bd + " OK\n");
 			}
 		} catch (SQLException e) {
 			log.error("Excepcion SQL al conectarse a base de datos "
@@ -46,12 +47,17 @@ public class DbConnection {
 		}
 	}
 
-	/** Permite retornar la conexión */
+	/**
+	 * Permite retornar la conexión
+	 *
+	 * @return connection
+	 * */
 	public Connection getConnection() {
-		return connection;
+		return this.connection;
 	}
 
+	/** Desconecta la conexión */
 	public void desconectar() {
-		connection = null;
+		this.connection = null;
 	}
 }

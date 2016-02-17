@@ -84,7 +84,6 @@ public class PeliculaServlet extends MasterServlet {
 		} catch (Exception e) {
 			log.error("Excepcion al recibir el GET " + e.getMessage());
 
-			// TODO ir a página error 404.jsp o 500.jsp
 		}
 	}
 
@@ -127,10 +126,16 @@ public class PeliculaServlet extends MasterServlet {
 			msj = new Mensaje("No se ha modificado el registro",
 					Mensaje.TIPO_WARNING);
 		}
-		// listar
+		// llama al metodo listar pasandole la request
 		listar(request);
 	}
 
+	/**
+	 * Elimina una pelicula de la base de datos
+	 * 
+	 * @param request
+	 * @throws SQLException
+	 */
 	private void eliminar(HttpServletRequest request) throws SQLException {
 		try {
 			int pId = Integer.parseInt(request.getParameter("id"));
@@ -162,6 +167,12 @@ public class PeliculaServlet extends MasterServlet {
 		dispatch = request.getRequestDispatcher(Constantes.VIEW_PELICULA_FORM);
 	}
 
+	/**
+	 * Lista las peliculas de la base de datos
+	 * 
+	 * @param request
+	 * @throws SQLException
+	 */
 	private void listar(HttpServletRequest request) throws SQLException {
 
 		// Llamar modelo para obtener listado
@@ -177,6 +188,13 @@ public class PeliculaServlet extends MasterServlet {
 
 	}
 
+	/**
+	 * Muestra el detalle de una pelicula para modificar sus datos
+	 * 
+	 * @param request
+	 * @throws NumberFormatException
+	 * @throws SQLException
+	 */
 	private void detalle(HttpServletRequest request)
 			throws NumberFormatException, SQLException {
 		pId = request.getParameter("id");

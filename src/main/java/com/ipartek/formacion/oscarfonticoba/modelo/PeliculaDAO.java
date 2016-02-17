@@ -10,6 +10,12 @@ import org.apache.log4j.Logger;
 
 import com.ipartek.formacion.oscarfonticoba.pojo.Pelicula;
 
+/**
+ * DAO para realizar las operaciones de CRUD contra la base de datos peliculas
+ * 
+ * @author Oscar
+ *
+ */
 public class PeliculaDAO implements Persistable<Pelicula> {
 	private final static Logger log = Logger.getLogger(PeliculaDAO.class);
 
@@ -128,6 +134,14 @@ public class PeliculaDAO implements Persistable<Pelicula> {
 		}
 		return i;
 	}
+
+	/**
+	 * Mapeo entre los atributos del pojo de pelicula y lo que devuelve la sql
+	 * 
+	 * @param res
+	 * @return
+	 * @throws SQLException
+	 */
 
 	private Pelicula mapeo(ResultSet res) throws SQLException {
 
