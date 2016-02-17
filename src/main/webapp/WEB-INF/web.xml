@@ -32,4 +32,10 @@
     <servlet-name>MasterServlet</servlet-name>
     <url-pattern>/master</url-pattern>
   </servlet-mapping>
+  
+  
+   <listener>
+    <listener-class>com.ipartek.formacion.oscarfonticoba.listeners.InitListener</listener-class>
+  </listener>
+  
 </web-app>
