@@ -10,6 +10,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Bienvenido</h1>
+			<img src="img/cine.jpg" width="100%" maxwidth="640">
 			
 		</div>
 		<!-- /.col-lg-12 -->
